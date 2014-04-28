@@ -1,8 +1,24 @@
 @import url('normalize.css');
 @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
 
-.c100 {
-	display: none;
+.c000:hover {
+	background: rgb(255,132,32);	
+}
+
+.c025:hover {
+	background: rgb(255,195,93);	
+}
+
+.c050:hover {
+	background: rgb(255,132,32);	
+}
+
+.c075:hover {
+	background: rgb(247,255,104);	
+}
+
+.c100:hover {
+	background: rgb(155,255,115);
 }
 
 #container {
