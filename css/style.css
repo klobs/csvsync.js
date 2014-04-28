@@ -1,0 +1,47 @@
+@import url('normalize.css');
+@import url(http://fonts.googleapis.com/css?family=Droid+Serif);
+
+.c100 {
+	display: none;
+}
+
+#container {
+	margin: 50px 0 0 50px;
+	width: 700px;
+	height: 350px;
+}
+
+#controls {
+	font-family: 'Droid Serif', serif;
+	font-size: 1em;
+	line-height: 1.5em;
+	right: 30px;
+	top: 100px;
+	width: 280px;
+	position: absolute;
+}
+
+#dropbox {
+	width: 280px;
+	height: 110px;
+	background: url(images/download.png) no-repeat center center;
+	background-color: #454545;
+	position: absolute;
+	right: 30px;
+	bottom: 20px;
+	border-radius: 3px;
+	box-shadow: inset 1px 2px 8px 1px rgba(0, 0, 0, .4);
+}
+
+#maincontent{
+	width: 70%;
+}
+
+#message {
+	color: #F8F8F8;
+	font-size: 1.2em;
+	bottom: 5px;
+	display: block;
+	text-align: center;
+	margin-top: 73px;
+}
