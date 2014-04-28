@@ -30,12 +30,6 @@
 	margin-top: 73px;
 }
 
-#container {
-	margin: 50px 0 0 50px;
-	width: 700px;
-	height: 350px;
-}
-
 #controls {
 	font-family: 'Droid Serif', serif;
 	font-size: 1em;
@@ -47,7 +41,6 @@
 }
 
 #dropbox {
-	width: 280px;
 	height: 110px;
 	background-color: #454545;
 	position: fixed;
@@ -69,3 +62,7 @@
 	box-shadow: inset 1px 2px 8px 1px rgba(0, 0, 0, .4);
 }
 
+#sidebar{
+	top: 10px;
+	bottom: 30px;
+}

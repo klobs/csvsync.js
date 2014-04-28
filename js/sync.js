@@ -8,6 +8,8 @@ function addException(machineName, day){
 
 	document.getElementById("exceptions").setAttribute("style","display: inline;");
 
+	document.getElementById("notificationzone").innerHTML = '<div class="notice success"><i class="icon-ok icon-large"></i> Succsessfully added ' + machineName + ' as an exception <a href="#close" class="icon-remove"></a></div>';
+
 	document.getElementById("exceptionsText").innerHTML = 
 			'<a href="data:text/csv;base64,' + btoa(exceptionExportGenerator()) + 
 			'" download="' + day + '_exceptions.csv"><i class="icon-download-alt"></i> Download Exception / OnGoing File</a>';
@@ -19,6 +21,8 @@ function addOnGoing(machineName, day){
 	onGoing[machineName] = { machine: m[day], onGoingDate: day};
 
 	document.getElementById("exceptions").setAttribute("style","display: inline;");
+
+	document.getElementById("notificationzone").innerHTML = '<div class="notice success"><i class="icon-ok icon-large"></i> Succsessfully added ' + machineName + ' as OnGoing <a href="#close" class="icon-remove"></a></div>';
 
 	document.getElementById("exceptionsText").innerHTML = 
 			'<a href="data:text/csv;base64,' + btoa(exceptionExportGenerator()) + 
