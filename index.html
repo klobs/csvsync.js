@@ -18,7 +18,7 @@
 			</div>
 
 			<div id="intro" class="tab-content">
-				<p>This script shall help to keep various CVS-files (comma
+<!--				<p>This script shall help to keep various CVS-files (comma
 				separated value) in sync / spott the differences. These CVS-files may originate from various systems.</p>
 
 				<p>Files have to following specs:</p>
@@ -31,7 +31,8 @@
 					function as syncronization key between all provided
 					files.</li>
 					<li>Elements within one line have to be seperated by either "," or ";"</li>	
-				</ul>
+				</ul> 
+-->
 			</div>
 
 			<div id="filelist" class="tab-content"></div>
@@ -40,11 +41,18 @@
 		</div>
 
 		<div class="col_4">
-			<div id="dropbox"> 
-				<span id="message" >drag & drop here</span>
-			</div>
+
 			<div id="controls">
-				<input type="checkbox" onclick="">display only incompliant</input>
+				<input id=toggleCompliant type="checkbox" onclick="">Toggle visibility of compliant machines</input>
+			</div>
+
+			<div id="exceptions">
+					<span id="exceptionsText" class="message" >
+						<i class="icon-download-alt"></i> Download Exception File
+					</span>
+			</div>
+			<div id="dropbox"> 
+				<span class="message" ><i class="icon-upload-alt"></i> Drag & Drop here</span>
 			</div>
 		</div>
 

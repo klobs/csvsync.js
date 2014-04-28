@@ -21,6 +21,15 @@
 	background: rgb(155,255,115);
 }
 
+.message {
+	color: #F8F8F8;
+	font-size: 1.2em;
+	bottom: 5px;
+	display: block;
+	text-align: center;
+	margin-top: 73px;
+}
+
 #container {
 	margin: 50px 0 0 50px;
 	width: 700px;
@@ -40,7 +49,6 @@
 #dropbox {
 	width: 280px;
 	height: 110px;
-	background: url(images/download.png) no-repeat center center;
 	background-color: #454545;
 	position: fixed;
 	right: 30px;
@@ -49,11 +57,15 @@
 	box-shadow: inset 1px 2px 8px 1px rgba(0, 0, 0, .4);
 }
 
-#message {
-	color: #F8F8F8;
-	font-size: 1.2em;
-	bottom: 5px;
-	display: block;
-	text-align: center;
-	margin-top: 73px;
+#exceptions {
+	display: none;
+	width: 280px;
+	height: 110px;
+	background-color: #454545;
+	position: fixed;
+	right: 30px;
+	bottom: 150px;
+	border-radius: 3px;
+	box-shadow: inset 1px 2px 8px 1px rgba(0, 0, 0, .4);
 }
+

@@ -2,6 +2,29 @@
 // http://www.html5rocks.com/en/tutorials/file/dndfiles/#toc-selecting-files-dnd and
 // http://alexthorpe.com/uncategorized/learn-how-to-drag-drop-chart-a-file-using-html5/588/
 
+function addException(machineName, day){
+	var m = machines[machineName];
+	exceptions[machineName] = { machine: m[day], exceptionDate: day};
+
+	document.getElementById("exceptions").setAttribute("style","display: inline;");
+
+	document.getElementById("exceptionsText").innerHTML = 
+			'<a href="data:text/csv;charset=UTF-8,' + complianceExportGenerator() + 
+			'" download><i class="icon-download-alt"></i> Download Exception File</a>';
+}	
+
+function complianceExportGenerator(){
+	c = "#HOSTNAME,Date of incompliance acceptance,list|of|incompliances|accepted\n\r";
+	for (e in exceptions){
+		c += e + "," + (exceptions[e])["exceptionDate"] + ",";
+		for(s in (exceptions[e])["machine"]){
+			c+= s + "|";
+		}
+		c += "\n\r";
+	}
+	return c;
+}
+
 function getFilenameLi() {
 	var l = "";
 	for (i = 0; i < filenames.length; i++){
@@ -166,7 +189,7 @@ function renderTables( day ){
 		if(!(day in machines[m]))
 			continue;
 		var cl = getComplianceLevel(machines[m], day);
-		var exceptionButton = cl === "c100" ? "": '<button class="green small"><i class="icon-ok"></i>Add Exception</button>'; 
+		var exceptionButton = cl === "c100" ? "": '<button class="green small" onclick="addException(\'' + m + '\', \'' + day + '\')"><i class="icon-ok"></i> Add Exception</button>'; 
 		tableDiv += "<tr class="+ cl  +"><td>" + m + "</td>";
 		tableDiv += "<td>"; 
 	
@@ -203,6 +226,7 @@ function updateMachine(machine, day, system){
 
 // Setup the dnd listeners.
 var csv, dates = [], filenames = [], systems = [], machines = {};
+var exceptions = {};
 var dropZone = document.getElementById('dropbox');
 dropZone.addEventListener('dragover', handleDragOver, false);
 dropZone.addEventListener('drop', handleFileSelect, false);
