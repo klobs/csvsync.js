@@ -125,7 +125,7 @@ function processData(file) {
 			continue;
 
 		// Seperate line by comma
-		var data = allTextLines[i].split(',');
+		var data = allTextLines[i].split(/,|;/);
 
 		data[0] = data[0].toUpperCase();
 
