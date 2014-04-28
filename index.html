@@ -9,15 +9,7 @@
 	</head>
 
 	<body>
-		<div id="dropbox"> 
-			<span id="message" >drag & drop here</span>
-		</div>
-		<div id="controls">
-			<input type="checkbox" onclick="">display only incompliant</input>
-		</div>
-
-
-		<div id="maincontent">
+		<div id="maincontent" class="col_8">
 			<div>
 				<ul id="tabitems" class="tabs left">
 					<li><a href="#intro">Intro</a></li>
@@ -42,12 +34,23 @@
 				</ul>
 			</div>
 
-			<div id="tables"></div>
+			<div id="filelist" class="tab-content"></div>
 
-			<div id="filelist" class="tab-content">
+			<div id="tables"></div>
+		</div>
+
+		<div class="col_4">
+			<div id="dropbox"> 
+				<span id="message" >drag & drop here</span>
+			</div>
+			<div id="controls">
+				<input type="checkbox" onclick="">display only incompliant</input>
 			</div>
 		</div>
 
-		<script src="js/sync.js" > </script>
-	</body>
+
+	</div>
+
+	<script src="js/sync.js" > </script>
+</body>
 </html>

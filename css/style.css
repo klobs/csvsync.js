@@ -42,15 +42,11 @@
 	height: 110px;
 	background: url(images/download.png) no-repeat center center;
 	background-color: #454545;
-	position: absolute;
+	position: fixed;
 	right: 30px;
 	bottom: 20px;
 	border-radius: 3px;
 	box-shadow: inset 1px 2px 8px 1px rgba(0, 0, 0, .4);
-}
-
-#maincontent{
-	width: 70%;
 }
 
 #message {
