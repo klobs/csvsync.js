@@ -26,7 +26,20 @@
 			</div>
 
 			<div id="intro" class="tab-content">
-				Test
+				<p>This script shall help to keep various CVS-files (comma
+				separated value) in sync / spott the differences. These CVS-files may originate from various systems.</p>
+
+				<p>Files have to following specs:</p>
+				<ul>
+					<li>Filename is
+					<em>&lt;date&gt;_&lt;systemname&gt;[_&lt;verions&gt;].cvs</em>.
+					&lt;date&gt; has to be in the format YYYYDDMM.</li>
+					<li>Files may contain empty lines or comments. Comments begin with "#".</li>
+					<li>One item per line. The first Element of each line will
+					function as syncronization key between all provided
+					files.</li>
+					<li>Elements within one line have to be seperated by either "," or ";"</li>	
+				</ul>
 			</div>
 
 			<div id="tables"></div>

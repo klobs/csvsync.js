@@ -1,4 +1,4 @@
-// may ideas taken from:
+// many ideas taken from:
 // http://www.html5rocks.com/en/tutorials/file/dndfiles/#toc-selecting-files-dnd and
 // http://alexthorpe.com/uncategorized/learn-how-to-drag-drop-chart-a-file-using-html5/588/
 
