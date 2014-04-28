@@ -153,7 +153,7 @@ function renderTables( date ){
 		closeDiv = true;
 	}
 	
-	tableDiv = tableDiv + "<h1>" + formatDate(date) + '</h1>\n<table class="tight"><thead><tr><th>Asset Name</th>';
+	tableDiv = tableDiv + "<h2>" + formatDate(date) + '</h2>\n<table class="tight"><thead><tr><th>Asset Name</th>';
 
 	for(var i = 0; i < systems.length; i++){
 		tableDiv = tableDiv + "<th>" + systems[i] + "</th>";
