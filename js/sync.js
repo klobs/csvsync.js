@@ -22,6 +22,13 @@ function formatDate(date){
 			date[7];
 }
 
+function getMachine(machine){
+	var m = {};
+	if(machine in machines){ m = machines[machine]; }
+	else { machines[machine] = m; }
+	return m;
+}
+
 function handleFileSelect(evt) {
 	evt.stopPropagation();
 	evt.preventDefault();
@@ -36,21 +43,19 @@ function handleDragOver(evt) {
 	evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
 }
 
-function getComplianceLevel(machine){
+function getComplianceLevel(machine, day){
 	var t = "unknonw";
 	var inc = 0;
 
 	for ( var i in systems){
-		if(machine[systems[i]] !== true)
+		if((machine[day])[systems[i]] !== true)
 			inc++;
 	}
 
 	var cl = inc/systems.length;
 	
-	if(cl === 1)
-		t = "c000";	
-	else if (cl < 1 && cl >= 0.75)
-		t = "c001";
+	if (cl <= 1 && cl >= 0.75)
+		t = "c000";
 	else if (cl < 0.75 && cl >= 0.5)
 		t = "c025";
 	else if (cl < 0.5 && cl >= 0.25)
@@ -106,10 +111,10 @@ function processData(file) {
 	}
 
 	// See wheather there is already data for this day
-	var day = {};
+	var day = meta[0];
 
-	if(meta[0] in dates){ day = dates[meta[0]]; }
-	else { dates[meta[0]] = day; }
+	// Did we already collect data about this day?
+	updateDates(day);
 
 	// Seperate file by line breaks
 	var allTextLines = csv.split(/\r\n|\n/);	
@@ -124,36 +129,32 @@ function processData(file) {
 		if (commentOrEmpty.test(allTextLines[i]))
 			continue;
 
-		// Seperate line by comma
+		// Seperate line by comma or semicolon
 		var data = allTextLines[i].split(/,|;/);
 
 		data[0] = data[0].toUpperCase();
 
-		var asset = {};	
+		var machine = getMachine(data[0]);
 
-		// Do we already have information about that asset?
-		if(data[0] in day){ asset = day[data[0]]; } 
-		else { day[data[0]] = asset; }
-
-		asset[system] = true;
+		updateMachine(machine, day, system);
 	}
-	renderTables(meta[0]);
+	renderTables(day);
 }
 
-function renderTables( date ){
+function renderTables( day ){
 
-	var tableZone = document.getElementById(date);
+	var tableZone = document.getElementById(day);
 	var closeDiv  = false;
 	
 	var tableDiv = "";
 	
 	if (tableZone === null){
 		tableZone = document.getElementById("tables");
-		tableDiv = tableDiv + '<div id="' + date + '" class="tab-content">\n\t';
+		tableDiv = tableDiv + '<div id="' + day + '" class="">\n\t';
 		closeDiv = true;
 	}
 	
-	tableDiv = tableDiv + "<h2>" + formatDate(date) + '</h2>\n<table class="tight"><thead><tr><th>Asset Name</th>';
+	tableDiv = tableDiv + "<h2>" + formatDate(day) + '</h2>\n<table class="tight"><thead><tr><th>Asset Name</th>';
 
 	for(var i = 0; i < systems.length; i++){
 		tableDiv = tableDiv + "<th>" + systems[i] + "</th>";
@@ -161,12 +162,12 @@ function renderTables( date ){
 
 	tableDiv = tableDiv + "</tr></thead><tbody>";
 
-	machines = Object.keys(dates[date]);
-
-	for(var machine = 0; machine < machines.length; machine++){
-		tableDiv = tableDiv + "<tr class="+ getComplianceLevel((dates[date])[machines[machine]]) +"><td>" + machines[machine] + "</td>"
-			for(var s=0; s< systems.length; s++){
-				var c =	((dates[date])[machines[machine]])[systems[s]] == true ? "ok" : "x"
+	for(m in machines){
+		if(!(day in machines[m]))
+			continue;
+		tableDiv = tableDiv + "<tr class="+ getComplianceLevel(machines[m], day) +"><td>" + m + "</td>"
+			for(var s = 0; s < systems.length; s++){
+				var c =	((machines[m])[day])[systems[s]] == true ? "ok" : "x"
 				tableDiv = tableDiv + "<td>" + c + "</td>";
 			}
 		tableDiv = tableDiv + "</tr>\n";
@@ -180,8 +181,22 @@ function renderTables( date ){
 	tableZone.innerHTML = tableDiv;
 }
 
+function updateDates(day){
+	if(dates.indexOf(day) === -1){
+		dates.push(day);
+		dates = dates.sort();
+	}
+}
+
+function updateMachine(machine, day, system){
+	if(!(day in machine)){
+		machine[day] = {};
+	}
+	(machine[day])[system] = true;
+}
+
 // Setup the dnd listeners.
-var csv, dates = {}, filenames = [], systems = [];
+var csv, dates = [], filenames = [], systems = [], machines = {};
 var dropZone = document.getElementById('dropbox');
 dropZone.addEventListener('dragover', handleDragOver, false);
 dropZone.addEventListener('drop', handleFileSelect, false);
