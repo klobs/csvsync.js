@@ -10,20 +10,45 @@ function addException(machineName, day){
 
 	document.getElementById("exceptionsText").innerHTML = 
 			'<a href="data:text/csv;base64,' + btoa(exceptionExportGenerator()) + 
-			'" download="' + day + '_exceptions.csv"><i class="icon-download-alt"></i> Download Exception File</a>';
-
-	document.getElementById("btnExpt" + day + machineName).setAttribute("class", "disabled small");
-	document.getElementById("btnExpt" + day + machineName).setAttribute("onclick", "");
+			'" download="' + day + '_exceptions.csv"><i class="icon-download-alt"></i> Download Exception / OnGoing File</a>';
+	disableOnGoingExceptionButton(machineName, day);
 }	
 
+function addOnGoing(machineName, day){
+	var m = machines[machineName];
+	onGoing[machineName] = { machine: m[day], onGoingDate: day};
+
+	document.getElementById("exceptions").setAttribute("style","display: inline;");
+
+	document.getElementById("exceptionsText").innerHTML = 
+			'<a href="data:text/csv;base64,' + btoa(exceptionExportGenerator()) + 
+			'" download="' + day + '_exceptions.csv"><i class="icon-download-alt"></i> Download Exception / OnGoing File</a>';
+	disableOnGoingExceptionButton(machineName, day);
+}	
+
+function disableOnGoingExceptionButton(machineName, day){
+	document.getElementById("btnExpt" + day + machineName).setAttribute("class", "disabled small");
+	document.getElementById("btnExpt" + day + machineName).setAttribute("onclick", "");
+	document.getElementById("btnOnGoing" + day + machineName).setAttribute("class", "disabled small");
+	document.getElementById("btnOnGoing" + day + machineName).setAttribute("onclick", "");
+}
+
 function exceptionExportGenerator(){
-	c = "#HOSTNAME,Date of incompliance acceptance,list|of|incompliances|accepted\n";
+	c = "#HOSTNAME,Date of incompliance acceptance,list|of|incompliances|accepted,ongoin|excepted\n";
 	for (e in exceptions){
 		c += e + "," + (exceptions[e])["exceptionDate"] + ",";
 		for(s in (exceptions[e])["machine"]){
 			c+= s + "|";
 		}
-		c += "\n";
+		c += ",exception\n";
+	}
+
+	for (e in onGoing){
+		c += e + "," + (onGoing[e])["onGoingDate"] + ",";
+		for(s in (onGoing[e])["machine"]){
+			c+= s + "|";
+		}
+		c += ",ongoing\n";
 	}
 	return c;
 }
@@ -191,13 +216,17 @@ function renderTables( day ){
 	for(m in machines){
 		if(!(day in machines[m]))
 			continue;
+
 		var cl = getComplianceLevel(machines[m], day);
+
 		var exceptionButton = cl === "c100" ? "": '<button id="btnExpt' + day + m + '" class="green small" onclick="addException(\'' + m + '\', \'' + day + '\')"><i class="icon-ok"></i> Add Exception</button>'; 
-		tableDiv += "<tr class="+ cl  +"><td>" + m + "</td>";
+		var onGoingButton = cl === "c100" ? "": '<button id="btnOnGoing' + day + m + '" class="orange small" onclick="addOnGoing(\'' + m + '\', \'' + day + '\')"><i class="icon-cogs"></i> Add as OnGoing</button>'; 
+
+		tableDiv += "<tr class="+ cl +"><td>" + m + "</td>";
 		tableDiv += "<td>"; 
 	
 
-		tableDiv = tableDiv	+ exceptionButton + " </td>";
+		tableDiv = tableDiv	+ exceptionButton + onGoingButton + " </td>";
 		for(var s = 0; s < systems.length; s++){
 			var c =	((machines[m])[day])[systems[s]] == true ? "ok" : "x";
 			tableDiv += "<td>" + c + "</td>";
@@ -229,7 +258,7 @@ function updateMachine(machine, day, system){
 
 // Setup the dnd listeners.
 var csv, dates = [], filenames = [], systems = [], machines = {};
-var exceptions = {};
+var onGoing = {}, exceptions = {};
 var dropZone = document.getElementById('dropbox');
 dropZone.addEventListener('dragover', handleDragOver, false);
 dropZone.addEventListener('drop', handleFileSelect, false);
