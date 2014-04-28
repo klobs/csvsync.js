@@ -154,7 +154,7 @@ function renderTables( day ){
 		closeDiv = true;
 	}
 	
-	tableDiv = tableDiv + "<h2>" + formatDate(day) + '</h2>\n<table class="tight"><thead><tr><th>Asset Name</th>';
+	tableDiv = tableDiv + "<h2>" + formatDate(day) + '</h2>\n<table class="sortable"><thead><tr><th>Asset Name</th><th>Action</th>';
 
 	for(var i = 0; i < systems.length; i++){
 		tableDiv = tableDiv + "<th>" + systems[i] + "</th>";
@@ -165,11 +165,17 @@ function renderTables( day ){
 	for(m in machines){
 		if(!(day in machines[m]))
 			continue;
-		tableDiv = tableDiv + "<tr class="+ getComplianceLevel(machines[m], day) +"><td>" + m + "</td>"
-			for(var s = 0; s < systems.length; s++){
-				var c =	((machines[m])[day])[systems[s]] == true ? "ok" : "x"
-				tableDiv = tableDiv + "<td>" + c + "</td>";
-			}
+		var cl = getComplianceLevel(machines[m], day);
+		var exceptionButton = cl === "c100" ? "": '<button class="green small"><i class="icon-ok"></i>Add Exception</button>'; 
+		tableDiv = tableDiv + "<tr class="+ cl  +"><td>" + m + "</td>";
+		tableDiv = tableDiv + "<td>"; 
+	
+
+		tableDiv = tableDiv	+ exceptionButton + " </td>";
+		for(var s = 0; s < systems.length; s++){
+			var c =	((machines[m])[day])[systems[s]] == true ? "ok" : "x";
+			tableDiv = tableDiv + "<td>" + c + "</td>";
+		}
 		tableDiv = tableDiv + "</tr>\n";
 	}
 
