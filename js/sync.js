@@ -9,18 +9,21 @@ function addException(machineName, day){
 	document.getElementById("exceptions").setAttribute("style","display: inline;");
 
 	document.getElementById("exceptionsText").innerHTML = 
-			'<a href="data:text/csv;charset=UTF-8,' + complianceExportGenerator() + 
-			'" download><i class="icon-download-alt"></i> Download Exception File</a>';
+			'<a href="data:text/csv;base64,' + btoa(exceptionExportGenerator()) + 
+			'" download="' + day + '_exceptions.csv"><i class="icon-download-alt"></i> Download Exception File</a>';
+
+	document.getElementById("btnExpt" + day + machineName).setAttribute("class", "disabled small");
+	document.getElementById("btnExpt" + day + machineName).setAttribute("onclick", "");
 }	
 
-function complianceExportGenerator(){
-	c = "#HOSTNAME,Date of incompliance acceptance,list|of|incompliances|accepted\n\r";
+function exceptionExportGenerator(){
+	c = "#HOSTNAME,Date of incompliance acceptance,list|of|incompliances|accepted\n";
 	for (e in exceptions){
 		c += e + "," + (exceptions[e])["exceptionDate"] + ",";
 		for(s in (exceptions[e])["machine"]){
 			c+= s + "|";
 		}
-		c += "\n\r";
+		c += "\n";
 	}
 	return c;
 }
@@ -189,7 +192,7 @@ function renderTables( day ){
 		if(!(day in machines[m]))
 			continue;
 		var cl = getComplianceLevel(machines[m], day);
-		var exceptionButton = cl === "c100" ? "": '<button class="green small" onclick="addException(\'' + m + '\', \'' + day + '\')"><i class="icon-ok"></i> Add Exception</button>'; 
+		var exceptionButton = cl === "c100" ? "": '<button id="btnExpt' + day + m + '" class="green small" onclick="addException(\'' + m + '\', \'' + day + '\')"><i class="icon-ok"></i> Add Exception</button>'; 
 		tableDiv += "<tr class="+ cl  +"><td>" + m + "</td>";
 		tableDiv += "<td>"; 
 	
