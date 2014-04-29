@@ -2,19 +2,19 @@
 @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
 
 .c000 {
-	background: rgb(255,132,32);	
+	background: #FF0000;	
 }
 
 .c025 {
-	background: rgb(255,195,93);	
+	background: #FF0000;	
 }
 
 .c050 {
-	background: rgb(255,132,32);	
+	background: #FF9900;	
 }
 
 .c075 {
-	background: rgb(247,255,104);	
+	background: #FFCC00;	
 }
 
 .c100 {
@@ -38,7 +38,6 @@
 	border-radius: 3px;
 	box-shadow: inset 1px 2px 8px 1px rgba(0, 0, 0, .4);
 }
-
 
 #exceptions {
 	display: none;
