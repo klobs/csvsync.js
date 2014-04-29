@@ -203,18 +203,10 @@ function processData(file) {
 
 function renderTables( day ){
 
-	var tableZone = document.getElementById("tab"+day);
-	var closeDiv  = false;
+//	tableDiv += '<div id="tab' + day + '" class="tab-content">\n\t';
+
 	
-	var tableDiv = "";
-	
-	if (tableZone === null){
-		tableZone = document.getElementById("tables");
-		tableDiv += '<div id="tab' + day + '" class="tab-content">\n\t';
-		closeDiv = true;
-	}
-	
-	tableDiv += "<h4>" + formatDate(day) + 
+	tableDiv = "<h4>" + formatDate(day) + 
 		'</h4>\n<table class=""><thead><tr><th>Asset Name</th><th>Action</th>';
 
 	for(var i = 0; i < systems.length; i++){
@@ -251,10 +243,21 @@ function renderTables( day ){
 
 	tableDiv += "</tbody></table></div>";	
 
-	if(closeDiv)
-		tableDiv += "</div>";	
+//	tableDiv += "</div>";	
 
-	tableZone.innerHTML = tableDiv;
+	var di = document.createElement("div");
+	di.setAttribute("class", "tab-content");
+	di.setAttribute("id", "tab" + day);
+	di.innerHTML = tableDiv;
+
+	var destZone = document.getElementById("tab"+day);
+
+	if(destZone === null)
+		document.getElementById("tables").appendChild(di);
+	else{
+		destZone.innerHTML = tableDiv;
+	}
+
 	updateTabIndex();
 	document.getElementById("i"+day).click();
 }
