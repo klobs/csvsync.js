@@ -18,9 +18,11 @@
 			</div>
 
 			<div id="intro" class="tab-content">
-<!--				<p>This script shall help to keep various CVS-files (comma
+				<h1>What is this?</h1>
+				<p>This script shall help to keep various CVS-files (comma
 				separated value) in sync / spott the differences. These CVS-files may originate from various systems.</p>
 
+				<h3>How to use this</h3>
 				<p>Files have to following specs:</p>
 				<ul>
 					<li>Filename is
@@ -32,29 +34,42 @@
 					files.</li>
 					<li>Elements within one line have to be seperated by either "," or ";"</li>	
 				</ul> 
--->
 			</div>
 
-			<div id="filelist" class="tab-content"></div>
+			<div id="filelist" class="tab-content">
+				<h4>As soon as you provide files, their names will appear here</h4>
+			</div>
 
 			<div id="tables"></div>
 		</div>
 
 		<div id="sidebar" class="col_4">
-			<div id="notificationzone">
+			<div id="dropbox" class="col_12 center">
+				<span class="message" ><i class="icon-upload-alt"></i> Drag & Drop here</span>
 			</div>
 
-			<div id="controls">
-				<input id=toggleCompliant type="checkbox" onclick="">Toggle visibility of compliant machines</input>
-			</div>
-
-			<div id="exceptions">
+			<div id="exceptions" class="col_12 center">
 					<span id="exceptionsText" class="message">
 						<i class="icon-download-alt"></i> Download Exception and OnGoing File
 					</span>
 			</div>
-			<div id="dropbox" class="col_122"> 
-				<span class="message" ><i class="icon-upload-alt"></i> Drag & Drop here</span>
+
+			<div id="compliance">
+				<h6>Compliance indicators</h6>
+				<span class="c100 center col_12 indicator"> 100%</span>
+				<span class="c075 center col_3 indicator"> 75%</span>
+				<span class="c050 center col_3 indicator"> 50%</span>
+				<span class="c025 center col_3 indicator"> 25%</span>
+				<span class="c000 center col_3 indicator"> 0%</span>
+			</div>
+
+			<!--			<div id="controls">
+				<h6>Controls</h6>
+				<input id=toggleCompliant type="checkbox" onclick="">Toggle visibility of compliant machines</input>
+			</div>
+			-->
+
+			<div id="notificationzone">
 			</div>
 		</div>
 

@@ -1,68 +1,49 @@
 @import url('normalize.css');
 @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
 
-.c000:hover {
+.c000 {
 	background: rgb(255,132,32);	
 }
 
-.c025:hover {
+.c025 {
 	background: rgb(255,195,93);	
 }
 
-.c050:hover {
+.c050 {
 	background: rgb(255,132,32);	
 }
 
-.c075:hover {
+.c075 {
 	background: rgb(247,255,104);	
 }
 
-.c100:hover {
+.c100 {
 	background: rgb(155,255,115);
+}
+
+.indicator{
+	padding: 5px;
 }
 
 .message {
 	color: #F8F8F8;
 	font-size: 1.2em;
-	bottom: 5px;
 	display: block;
-	text-align: center;
 	margin-top: 73px;
-}
-
-#controls {
-	font-family: 'Droid Serif', serif;
-	font-size: 1em;
-	line-height: 1.5em;
-	right: 30px;
-	top: 100px;
-	width: 280px;
-	position: absolute;
 }
 
 #dropbox {
 	height: 110px;
 	background-color: #454545;
-	position: fixed;
-	right: 30px;
-	bottom: 20px;
 	border-radius: 3px;
 	box-shadow: inset 1px 2px 8px 1px rgba(0, 0, 0, .4);
 }
+
 
 #exceptions {
 	display: none;
-	width: 280px;
 	height: 110px;
 	background-color: #454545;
-	position: fixed;
-	right: 30px;
-	bottom: 150px;
 	border-radius: 3px;
 	box-shadow: inset 1px 2px 8px 1px rgba(0, 0, 0, .4);
-}
-
-#sidebar{
-	top: 10px;
-	bottom: 30px;
 }
