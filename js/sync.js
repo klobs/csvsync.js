@@ -152,7 +152,8 @@ function parse(files) {
 		})(f);
 	}
 
-	document.getElementById('filelist').innerHTML = '<ul>' + getFilenameLi() + '</ul>';
+	document.getElementById('filelist').innerHTML = '<h4>Following files have been analyzed</h4><ul>' + 
+		getFilenameLi() + '</ul>';
 }
 
 function processData(file) {
@@ -209,12 +210,12 @@ function renderTables( day ){
 	
 	if (tableZone === null){
 		tableZone = document.getElementById("tables");
-		tableDiv += '<div id="' + day + '" class="">\n\t';
+		tableDiv += '<div id="' + day + '" class="tab-content">\n\t';
 		closeDiv = true;
 	}
 	
-	tableDiv += "<h2>" + formatDate(day) + 
-		'</h2>\n<table class=""><thead><tr><th>Asset Name</th><th>Action</th>';
+	tableDiv += "<h4>" + formatDate(day) + 
+		'</h4>\n<table class=""><thead><tr><th>Asset Name</th><th>Action</th>';
 
 	for(var i = 0; i < systems.length; i++){
 		tableDiv += "<th>" + systems[i] + "</th>";
@@ -254,6 +255,7 @@ function renderTables( day ){
 		tableDiv += "</div>";	
 
 	tableZone.innerHTML = tableDiv;
+	updateTabIndex();
 }
 
 function updateDates(day){
@@ -268,6 +270,40 @@ function updateMachine(machine, day, system){
 		machine[day] = {};
 	}
 	(machine[day])[system] = true;
+}
+
+function updateTabIndex(){
+	tl = ' <ul class="tabs left"> <li><a href="#intro">Intro</a></li> <li><a href="#filelist">Filelist</a></li>'; 
+	for(i in dates){
+		tl += '<li><a href="#'+ dates[i] +'">' + formatDate(dates[i]) + '</a></li>';
+	}
+	tl += '</ul>';
+
+	document.getElementById("tabitems").innerHTML = tl;
+	
+	// Following code is stolen from kickstart html document.ready
+	// tab setup
+	$('.tab-content').addClass('clearfix').not(':first').hide();
+	$('ul.tabs').each(function(){
+		var current = $(this).find('li.current');
+		if(current.length < 1) { $(this).find('li:first').addClass('current'); }
+		current = $(this).find('li.current a').attr('href');
+		$(current).show();
+	});
+
+	// tab click
+	$(document).on('click', 'ul.tabs a[href^="#"]', function(e){
+		e.preventDefault();
+		var tabs = $(this).parents('ul.tabs').find('li');
+		var tab_next = $(this).attr('href');
+		var tab_current = tabs.filter('.current').find('a').attr('href');
+		$(tab_current).hide();
+		tabs.removeClass('current');
+		$(this).parent().addClass('current');
+		$(tab_next).show();
+		history.pushState( null, null, window.location.search + $(this).attr('href') );
+		return false;
+	});
 }
 
 // Setup the dnd listeners.
