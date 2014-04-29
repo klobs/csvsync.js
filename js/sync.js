@@ -8,7 +8,9 @@ function addException(machineName, day){
 
 	document.getElementById("exceptions").setAttribute("style","display: inline;");
 
-	document.getElementById("notificationzone").innerHTML = '<div class="notice success"><i class="icon-ok icon-large"></i> Succsessfully added ' + machineName + ' as an exception <a href="#close" class="icon-remove"></a></div>';
+	document.getElementById("notificationzone").innerHTML = 
+		'<div class="notice success"><i class="icon-ok icon-large"></i> Succsessfully added ' + 
+		machineName + ' as an exception <a href="#close" class="icon-remove"></a></div>';
 
 	document.getElementById("exceptionsText").innerHTML = 
 			'<a href="data:text/csv;base64,' + btoa(exceptionExportGenerator()) + 
@@ -22,7 +24,9 @@ function addOnGoing(machineName, day){
 
 	document.getElementById("exceptions").setAttribute("style","display: inline;");
 
-	document.getElementById("notificationzone").innerHTML = '<div class="notice success"><i class="icon-ok icon-large"></i> Succsessfully added ' + machineName + ' as OnGoing <a href="#close" class="icon-remove"></a></div>';
+	document.getElementById("notificationzone").innerHTML = 
+		'<div class="notice success"><i class="icon-ok icon-large"></i> Succsessfully added ' + 
+		machineName + ' as OnGoing <a href="#close" class="icon-remove"></a></div>';
 
 	document.getElementById("exceptionsText").innerHTML = 
 			'<a href="data:text/csv;base64,' + btoa(exceptionExportGenerator()) + 
@@ -209,7 +213,8 @@ function renderTables( day ){
 		closeDiv = true;
 	}
 	
-	tableDiv += "<h2>" + formatDate(day) + '</h2>\n<table class=""><thead><tr><th>Asset Name</th><th>Action</th>';
+	tableDiv += "<h2>" + formatDate(day) + 
+		'</h2>\n<table class=""><thead><tr><th>Asset Name</th><th>Action</th>';
 
 	for(var i = 0; i < systems.length; i++){
 		tableDiv += "<th>" + systems[i] + "</th>";
@@ -223,8 +228,12 @@ function renderTables( day ){
 
 		var cl = getComplianceLevel(machines[m], day);
 
-		var exceptionButton = cl === "c100" ? "": '<button id="btnExpt' + day + m + '" class="green small" onclick="addException(\'' + m + '\', \'' + day + '\')"><i class="icon-ok"></i> Add Exception</button>'; 
-		var onGoingButton = cl === "c100" ? "": '<button id="btnOnGoing' + day + m + '" class="orange small" onclick="addOnGoing(\'' + m + '\', \'' + day + '\')"><i class="icon-cogs"></i> Add as OnGoing</button>'; 
+		var exceptionButton = cl === "c100" ? "": '<button id="btnExpt' + day + 
+			m + '" class="green small" onclick="addException(\'' + m + '\', \'' + 
+					day + '\')"><i class="icon-ok"></i> Add Exception</button>'; 
+		var onGoingButton = cl === "c100" ? "": '<button id="btnOnGoing' + day + 
+			m + '" class="orange small" onclick="addOnGoing(\'' + m + '\', \'' + 
+					day + '\')"><i class="icon-cogs"></i> Add as OnGoing</button>'; 
 
 		tableDiv += "<tr class="+ cl +"><td>" + m + "</td>";
 		tableDiv += "<td>"; 
@@ -232,7 +241,8 @@ function renderTables( day ){
 
 		tableDiv = tableDiv	+ exceptionButton + onGoingButton + " </td>";
 		for(var s = 0; s < systems.length; s++){
-			var c =	((machines[m])[day])[systems[s]] == true ? '<i class="icon-ok"></i>' : '<i class="icon-thumbs-down"/>';
+			var c =	((machines[m])[day])[systems[s]] == 
+				true ? '<i class="icon-ok"></i>' : '<i class="icon-thumbs-down"/>';
 			tableDiv += "<td>" + c + "</td>";
 		}
 		tableDiv += "</tr>\n";
