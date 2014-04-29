@@ -209,7 +209,7 @@ function renderTables( day ){
 		closeDiv = true;
 	}
 	
-	tableDiv += "<h2>" + formatDate(day) + '</h2>\n<table class="sortable"><thead><tr><th>Asset Name</th><th>Action</th>';
+	tableDiv += "<h2>" + formatDate(day) + '</h2>\n<table class=""><thead><tr><th>Asset Name</th><th>Action</th>';
 
 	for(var i = 0; i < systems.length; i++){
 		tableDiv += "<th>" + systems[i] + "</th>";
@@ -232,7 +232,7 @@ function renderTables( day ){
 
 		tableDiv = tableDiv	+ exceptionButton + onGoingButton + " </td>";
 		for(var s = 0; s < systems.length; s++){
-			var c =	((machines[m])[day])[systems[s]] == true ? "ok" : "x";
+			var c =	((machines[m])[day])[systems[s]] == true ? '<i class="icon-ok"></i>' : '<i class="icon-thumbs-down"/>';
 			tableDiv += "<td>" + c + "</td>";
 		}
 		tableDiv += "</tr>\n";
