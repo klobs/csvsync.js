@@ -203,14 +203,14 @@ function processData(file) {
 
 function renderTables( day ){
 
-	var tableZone = document.getElementById(day);
+	var tableZone = document.getElementById("tab"+day);
 	var closeDiv  = false;
 	
 	var tableDiv = "";
 	
 	if (tableZone === null){
 		tableZone = document.getElementById("tables");
-		tableDiv += '<div id="' + day + '" class="tab-content">\n\t';
+		tableDiv += '<div id="tab' + day + '" class="tab-content">\n\t';
 		closeDiv = true;
 	}
 	
@@ -256,6 +256,7 @@ function renderTables( day ){
 
 	tableZone.innerHTML = tableDiv;
 	updateTabIndex();
+	document.getElementById("i"+day).click();
 }
 
 function updateDates(day){
@@ -275,7 +276,7 @@ function updateMachine(machine, day, system){
 function updateTabIndex(){
 	tl = ' <ul class="tabs left"> <li><a href="#intro">Intro</a></li> <li><a href="#filelist">Filelist</a></li>'; 
 	for(i in dates){
-		tl += '<li><a href="#'+ dates[i] +'">' + formatDate(dates[i]) + '</a></li>';
+		tl += '<li><a id="i'+ dates[i] +'"href="#tab'+ dates[i] +'">' + formatDate(dates[i]) + '</a></li>';
 	}
 	tl += '</ul>';
 
