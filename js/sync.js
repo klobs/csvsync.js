@@ -42,21 +42,30 @@ function disableOnGoingExceptionButton(machineName, day){
 }
 
 function exceptionExportGenerator(){
-	c = "#HOSTNAME,Date of incompliance acceptance,list|of|incompliances|accepted,ongoin|excepted\n";
+	var c = "#HOSTNAME,Date of incompliance acceptance,list|of|incompliances|accepted,ongoin|excepted\n";
+	
 	for (e in exceptions){
+		var r = ""	
 		c += e + "," + (exceptions[e])["exceptionDate"] + ",";
 		for(s in (exceptions[e])["machine"]){
-			c+= s + "|";
+			if ( r !== ""){
+				r += "|";
+			}
+			r+= s;
 		}
-		c += ",exception\n";
+		c += r + ",exception\n";
 	}
 
 	for (e in onGoing){
+		var r = ""	
 		c += e + "," + (onGoing[e])["onGoingDate"] + ",";
 		for(s in (onGoing[e])["machine"]){
-			c+= s + "|";
+			if ( r !== ""){
+				r += "|";
+			}
+			r+= s;
 		}
-		c += ",ongoing\n";
+		c += r + ",ongoing\n";
 	}
 	return c;
 }
