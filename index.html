@@ -44,6 +44,9 @@
 		</div>
 
 		<div id="sidebar" class="col_4">
+
+			<div><h6>File area</h6></div>
+
 			<div id="dropbox" class="col_12 center">
 				<span class="message" ><i class="icon-upload-alt"></i> Drag & Drop here</span>
 			</div>
@@ -56,11 +59,11 @@
 
 			<div id="compliance">
 				<h6>Compliance indicators</h6>
-				<span class="c100 center col_12 indicator"> 100%</span>
-				<span class="c075 center col_3 indicator"> 75%</span>
-				<span class="c050 center col_3 indicator"> 50%</span>
-				<span class="c025 center col_3 indicator"> 25%</span>
-				<span class="c000 center col_3 indicator"> 0%</span>
+				<span class="c100i center col_3 indicator" onclick="$('.c100').toggleClass('hidden');$('.c100i').toggleClass('opacity');"> 100%</span>
+				<span class="c075i center col_3 indicator" onclick="$('.c075').toggleClass('hidden');$('.c075i').toggleClass('opacity');"> 75%</span>
+				<span class="c050i center col_3 indicator" onclick="$('.c050').toggleClass('hidden');$('.c050i').toggleClass('opacity');"> 50%</span>
+				<span class="c025i center col_3 indicator" onclick="$('.c025').toggleClass('hidden');$('.c025i').toggleClass('opacity');"> 25%</span>
+				<!--				<span class="c000 center col_2 indicator"> 0%</span> -->
 			</div>
 
 			<!--			<div id="controls">

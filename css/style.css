@@ -1,28 +1,46 @@
 @import url('normalize.css');
 @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
 
-.c000 {
+.c000, .c000i {
 	background: #FF0000;	
 }
 
-.c025 {
+.c025, .c025i {
 	background: #FF0000;	
 }
 
-.c050 {
+.c050, .c050i {
 	background: #FF9900;	
 }
 
-.c075 {
+.c075, .c075i {
 	background: #FFCC00;	
 }
 
-.c100 {
+.c100, .c100i {
 	background: rgb(155,255,115);
+}
+
+.fade {
+	opacity: 1;
+	transition: opacity .25s ease-in-out;
+}
+
+.hidden{
+	display: none;
 }
 
 .indicator{
 	padding: 5px;
+}
+
+.ongoing {
+	background: blue;
+}
+
+.opacity {
+	opacity: 0.5;
+	transition: opacity .25s ease-in-out;
 }
 
 .message {

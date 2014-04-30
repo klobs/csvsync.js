@@ -9,7 +9,7 @@ function addException(machineName, day){
 	document.getElementById("exceptions").setAttribute("style","display: inline;");
 
 	document.getElementById("notificationzone").innerHTML = 
-		'<div class="notice success"><i class="icon-ok icon-large"></i> Succsessfully added ' + 
+		'<div class="notice success fade"><i class="icon-ok icon-large"></i> Succsessfully added ' + 
 		machineName + ' as an exception <a href="#close" class="icon-remove"></a></div>';
 
 	document.getElementById("exceptionsText").innerHTML = 
@@ -22,10 +22,12 @@ function addOnGoing(machineName, day){
 	var m = machines[machineName];
 	onGoing[machineName] = { machine: m[day], onGoingDate: day};
 
+	document.getElementById("tr" + machineName + day).setAttribute("style", "background: blue;");
+
 	document.getElementById("exceptions").setAttribute("style","display: inline;");
 
 	document.getElementById("notificationzone").innerHTML = 
-		'<div class="notice success"><i class="icon-ok icon-large"></i> Succsessfully added ' + 
+		'<div class="notice success fade"><i class="icon-ok icon-large"></i> Succsessfully added ' + 
 		machineName + ' as OnGoing <a href="#close" class="icon-remove"></a></div>';
 
 	document.getElementById("exceptionsText").innerHTML = 
@@ -35,10 +37,8 @@ function addOnGoing(machineName, day){
 }	
 
 function disableOnGoingExceptionButton(machineName, day){
-	document.getElementById("btnExpt" + day + machineName).setAttribute("class", "disabled small");
-	document.getElementById("btnExpt" + day + machineName).setAttribute("onclick", "");
-	document.getElementById("btnOnGoing" + day + machineName).setAttribute("class", "disabled small");
-	document.getElementById("btnOnGoing" + day + machineName).setAttribute("onclick", "");
+	document.getElementById("btnExpt" + day + machineName).setAttribute("disabled", "disabled");
+	document.getElementById("btnOnGoing" + day + machineName).setAttribute("disabled", "disabled");
 }
 
 function exceptionExportGenerator(){
@@ -237,7 +237,7 @@ function renderTables( day ){
 			m + '" class="orange small" onclick="addOnGoing(\'' + m + '\', \'' + 
 					day + '\')"><i class="icon-cogs"></i> Add as OnGoing</button>'; 
 
-		tableDiv += "<tr class="+ cl +"><td>" + m + "</td>";
+		tableDiv += "<tr id='tr"+ m + day + "' class='"+ cl +"'><td>" + m + "</td>";
 		tableDiv += "<td>"; 
 	
 
