@@ -153,10 +153,8 @@ function processData(file) {
 		systems.push(system);
 	}
 
-	// See wheather there is already data for this day
-	var day = meta[0];
-
 	// Did we already collect data about this day?
+	var day = meta[0];
 	updateDates(day);
 
 	// Seperate file by line breaks
