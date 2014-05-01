@@ -4,7 +4,12 @@
 
 function addException(machineName, day){
 	var m = machines[machineName];
-	exceptions[machineName] = { machine: m[day], exceptionDate: day, systems: systems, type: "exception"};
+	exceptions[machineName] = { machineName: m.machineName, 
+								complianceStatus: m[day], 
+								exceptionDateFrom: day, 
+								systems: systems, 
+								type: "exception"
+								};
 
 	document.getElementById("exceptions").setAttribute("style","display: block;");
 
@@ -20,7 +25,12 @@ function addException(machineName, day){
 
 function addOnGoing(machineName, day){
 	var m = machines[machineName];
-	ongoing[machineName] = { machine: m[day], onGoingDate: day, systems: systems, type: "ongoing"};
+	ongoing[machineName] = { machineName: m.machineName, 
+							 complianceStatus: m[day], 
+							 onGoingDateFrom: day,
+							 systems: systems,
+							 type: "ongoing"
+							};
 
 	document.getElementById("exceptions").setAttribute("style","display: block;");
 
@@ -33,6 +43,25 @@ function addOnGoing(machineName, day){
 			'" download="' + day + '_exceptions.json"><i class="icon-download-alt"></i> Download Exception / OnGoing File</a>';
 	disableOnGoingExceptionButton(machineName, day);
 }	
+
+// Only potentially incompliant systems pass by here.
+function checkExceptionOrOnGoing(machine, day, systemName, exceptionsOrOnGoing){
+	// Is there an exception at all?
+	if(!(machine.machineName in exceptionsOrOnGoing))
+		return "";
+
+	var m = exceptionsOrOnGoing[machine.machineName];
+
+	// If yes, could there be an exception for this system?
+	if(!(m.systems.indexOf(systemName)))
+		return "";
+
+	// So last measurement, the system was ok, and now it is not??? 
+	if(m.complianceStatus.systemName === true)
+		return "";
+
+	return m.type;
+}
 
 function disableOnGoingExceptionButton(machineName, day){
 	document.getElementById("btnExpt" + day + machineName).setAttribute("disabled", "disabled");
@@ -64,10 +93,10 @@ function formatDate(date){
 			date[7];
 }
 
-function getMachine(machine){
-	var m = {};
-	if(machine in machines){ m = machines[machine]; }
-	else { machines[machine] = m; }
+function getMachine(machineName){
+	var m = {machineName: machineName};
+	if(machineName in machines){ m = machines[machineName]; }
+	else { machines[machineName] = m; }
 	return m;
 }
 
@@ -86,26 +115,29 @@ function handleDragOver(evt) {
 }
 
 function getComplianceLevel(machine, day){
-	var t = "unknonw";
+	var t = "problem";
 	var inc = 0;
 
 	for ( var i in systems){
-		if((machine[day])[systems[i]] !== true)
+		if((machine[day])[systems[i]] !== true){
+			t = checkExceptionOrOnGoing(machine, day, systems[i], exceptions);
+			t += checkExceptionOrOnGoing(machine, day, systems[i], ongoing);
 			inc++;
+		}
 	}
 
 	var cl = inc/systems.length;
 	
 	if (cl <= 1 && cl >= 0.75)
-		t = "c000";
+		t += " c000";
 	else if (cl < 0.75 && cl >= 0.5)
-		t = "c025";
+		t += " c025";
 	else if (cl < 0.5 && cl >= 0.25)
-		t = "c050";
+		t += " c050";
 	else if (cl < 0.25 && cl > 0)
-		t = "c075";
+		t += " c075";
 	else if (cl === 0)
-		t = "c100";
+		t = " c100";
 	return t;
 }
 
@@ -145,17 +177,28 @@ function processData(file) {
 	// files have to look like YYYYMMDD_<system>_extension.csv
 	// One special case is the exception system
 	var meta = file.name.split(/_|\./);
-
-	var system = meta[1];
-
-	// Remember which systems exists
-	if(systems.indexOf(system) === -1){
-		systems.push(system);
-	}
-
+	
 	// Did we already collect data about this day?
 	var day = meta[0];
 	updateDates(day);
+
+	// What kind of system re we dealing with?
+	var system = meta[1];
+
+	if (system === "exceptions"){
+		// is this a special, mighty, magical system?
+		// let's trust it without input validation, which is always a good idea.
+		// We can always (and will) add security, later. 
+		var e = JSON.parse(csv);	
+		exceptions = e.exceptions;
+		ongoing = e.ongoing;
+		renderTables(day);
+		return;
+	}
+	else if(systems.indexOf(system) === -1){
+		// Remember which systems exists
+		systems.push(system);
+	}
 
 	// Seperate file by line breaks
 	var allTextLines = csv.split(/\r\n|\n/);	

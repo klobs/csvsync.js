@@ -32,6 +32,8 @@
 
 .hidden{
 	display: none;
+	-webkit-transition: all 500ms ease 1s;
+	transition: all 500ms ease 1s;
 }
 
 .indicator{
@@ -47,6 +49,15 @@
 	transition: opacity .25s ease-in-out;
 }
 
+.problem{
+	background: repeating-linear-gradient(
+					45deg,
+					yellow,
+					yellow 10px,
+					black 10px,
+					black 20px);
+}
+
 .message {
 	color: #F8F8F8;
 	font-size: 1.2em;
@@ -59,6 +70,15 @@
 	background-color: #454545;
 	border-radius: 3px;
 	box-shadow: inset 1px 2px 8px 1px rgba(0, 0, 0, .4);
+}
+
+#dropbox: hover{
+	background: repeating-linear-gradient(
+					45deg,
+					yellow,
+					yellow 10px,
+					black 10px,
+					black 20px);
 }
 
 #exceptions {

@@ -1,5 +1,4 @@
 - UX tweaks
-- Exception importer
-- OnGoing importer
+- Exception & on going parser should take care of the dates
 - Timelines
 - Stats
