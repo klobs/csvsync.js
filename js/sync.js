@@ -11,14 +11,10 @@ function addException(machineName, day){
 								type: "exception"
 								};
 
-	document.getElementById("exceptions").setAttribute("style","display: block;");
-
+	updateDownloadButton(day);
 	displayNotice(machineName, "an exception");
-
-	document.getElementById("exceptionsText").innerHTML =
-			'<a href="data:text/csv;base64,' + btoa(exceptionExportGenerator()) +
-			'" download="' + day + '_exceptions.csv"><i class="icon-download-alt"></i> Download Exception / OnGoing File</a>';
 	disableOnGoingExceptionButton(machineName, day);
+	$("#tr"+machineName+day).addClass("exception");
 }
 
 function addOnGoing(machineName, day){
@@ -30,14 +26,10 @@ function addOnGoing(machineName, day){
 							 type: "ongoing"
 							};
 
-	document.getElementById("exceptions").setAttribute("style","display: block;");
-
+	updateDownloadButton(day);
 	displayNotice(machineName, "on-going");
-
-	document.getElementById("exceptionsText").innerHTML =
-			'<a href="data:text/csv;base64,' + btoa(exceptionExportGenerator()) +
-			'" download="' + day + '_exceptions.json"><i class="icon-download-alt"></i> Download Exception / OnGoing File</a>';
 	disableOnGoingExceptionButton(machineName, day);
+	$("#tr"+machineName+day).addClass("ongoing");
 }
 
 // Only potentially incompliant systems pass by here.
@@ -292,6 +284,13 @@ function updateDates(day){
 		dates.push(day);
 		dates = dates.sort();
 	}
+}
+
+function updateDownloadButton(day){
+	document.getElementById("exceptions").setAttribute("style","display: block;");
+	document.getElementById("exceptionsText").innerHTML =
+		'<a href="data:text/csv;base64,' + btoa(exceptionExportGenerator()) +
+		'" download="' + day + '_exceptions.csv"><i class="icon-download-alt"></i> Download Exception / OnGoing File</a>';
 }
 
 function updateMachine(machine, day, system){
