@@ -4,7 +4,7 @@
 
 function addException(machineName, day){
 	var m = machines[machineName];
-	exceptions[machineName] = { machine: m[day], exceptionDate: day};
+	exceptions[machineName] = { machine: m[day], exceptionDate: day, systems: systems, type: "exception"};
 
 	document.getElementById("exceptions").setAttribute("style","display: inline;");
 
@@ -20,7 +20,7 @@ function addException(machineName, day){
 
 function addOnGoing(machineName, day){
 	var m = machines[machineName];
-	onGoing[machineName] = { machine: m[day], onGoingDate: day};
+	onGoing[machineName] = { machine: m[day], onGoingDate: day, systems: systems, type: "ongoing"};
 
 	document.getElementById("tr" + machineName + day).setAttribute("style", "background: blue;");
 
@@ -32,7 +32,7 @@ function addOnGoing(machineName, day){
 
 	document.getElementById("exceptionsText").innerHTML = 
 			'<a href="data:text/csv;base64,' + btoa(exceptionExportGenerator()) + 
-			'" download="' + day + '_exceptions.csv"><i class="icon-download-alt"></i> Download Exception / OnGoing File</a>';
+			'" download="' + day + '_exceptions.json"><i class="icon-download-alt"></i> Download Exception / OnGoing File</a>';
 	disableOnGoingExceptionButton(machineName, day);
 }	
 
@@ -42,31 +42,8 @@ function disableOnGoingExceptionButton(machineName, day){
 }
 
 function exceptionExportGenerator(){
-	var c = "#HOSTNAME,Date of incompliance acceptance,list|of|incompliances|accepted,ongoin|excepted\n";
-	
-	for (e in exceptions){
-		var r = ""	
-		c += e + "," + (exceptions[e])["exceptionDate"] + ",";
-		for(s in (exceptions[e])["machine"]){
-			if ( r !== ""){
-				r += "|";
-			}
-			r+= s;
-		}
-		c += r + ",exception\n";
-	}
-
-	for (e in onGoing){
-		var r = ""	
-		c += e + "," + (onGoing[e])["onGoingDate"] + ",";
-		for(s in (onGoing[e])["machine"]){
-			if ( r !== ""){
-				r += "|";
-			}
-			r+= s;
-		}
-		c += r + ",ongoing\n";
-	}
+	var c = JSON.stringify(exceptions);
+	c+= JSON.stringify(onGoing);
 	return c;
 }
 
