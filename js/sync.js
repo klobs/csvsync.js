@@ -6,7 +6,7 @@ function addException(machineName, day){
 	var m = machines[machineName];
 	exceptions[machineName] = { machineName: m.machineName, 
 								complianceStatus: m[day], 
-								exceptionDateFrom: day, 
+								validFrom: day, 
 								systems: systems, 
 								type: "exception"
 								};
@@ -27,7 +27,7 @@ function addOnGoing(machineName, day){
 	var m = machines[machineName];
 	ongoing[machineName] = { machineName: m.machineName, 
 							 complianceStatus: m[day], 
-							 onGoingDateFrom: day,
+							 validFrom: day,
 							 systems: systems,
 							 type: "ongoing"
 							};
