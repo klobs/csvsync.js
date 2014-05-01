@@ -248,10 +248,10 @@ function renderTables( day ){
 
 		var cl = getComplianceLevel(machines[m], day);
 
-		var exceptionButton = cl === "c100" ? "": '<button id="btnExpt' + day + 
+		var exceptionButton = /c100/.test(cl) ? "": '<button id="btnExpt' + day + 
 			m + '" class="green small" onclick="addException(\'' + m + '\', \'' + 
 					day + '\')"><i class="icon-ok"></i> Add Exception</button>'; 
-		var onGoingButton = cl === "c100" ? "": '<button id="btnOnGoing' + day + 
+		var onGoingButton = /c100/.test(cl) ? "": '<button id="btnOnGoing' + day + 
 			m + '" class="orange small" onclick="addOnGoing(\'' + m + '\', \'' + 
 					day + '\')"><i class="icon-cogs"></i> Add as OnGoing</button>'; 
 
