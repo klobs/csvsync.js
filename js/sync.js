@@ -236,7 +236,11 @@ function renderTables( day ){
 
 	tableDiv += "</tr></thead><tbody>";
 
-	for(m in machines){
+	var ma = Object.keys(machines).sort();
+
+	for(u in ma){
+		m = ma[u];
+
 		if(!(day in machines[m]))
 			continue;
 
