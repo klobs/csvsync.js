@@ -6,7 +6,7 @@ function addException(machineName, day){
 	var m = machines[machineName];
 	exceptions[machineName] = { machine: m[day], exceptionDate: day, systems: systems, type: "exception"};
 
-	document.getElementById("exceptions").setAttribute("style","display: inline;");
+	document.getElementById("exceptions").setAttribute("style","display: block;");
 
 	document.getElementById("notificationzone").innerHTML = 
 		'<div class="notice success fade"><i class="icon-ok icon-large"></i> Succsessfully added ' + 
@@ -22,9 +22,7 @@ function addOnGoing(machineName, day){
 	var m = machines[machineName];
 	onGoing[machineName] = { machine: m[day], onGoingDate: day, systems: systems, type: "ongoing"};
 
-	document.getElementById("tr" + machineName + day).setAttribute("style", "background: blue;");
-
-	document.getElementById("exceptions").setAttribute("style","display: inline;");
+	document.getElementById("exceptions").setAttribute("style","display: block;");
 
 	document.getElementById("notificationzone").innerHTML = 
 		'<div class="notice success fade"><i class="icon-ok icon-large"></i> Succsessfully added ' + 
