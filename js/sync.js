@@ -4,10 +4,10 @@
 
 function addException(machineName, day){
 	var m = machines[machineName];
-	exceptions[machineName] = { machineName: m.machineName, 
-								complianceStatus: m[day], 
-								validFrom: day, 
-								systems: systems, 
+	exceptions[machineName] = { machineName: m.machineName,
+								complianceStatus: m[day],
+								validFrom: day,
+								systems: systems,
 								type: "exception"
 								};
 
@@ -15,16 +15,16 @@ function addException(machineName, day){
 
 	displayNotice(machineName, "an exception");
 
-	document.getElementById("exceptionsText").innerHTML = 
-			'<a href="data:text/csv;base64,' + btoa(exceptionExportGenerator()) + 
+	document.getElementById("exceptionsText").innerHTML =
+			'<a href="data:text/csv;base64,' + btoa(exceptionExportGenerator()) +
 			'" download="' + day + '_exceptions.csv"><i class="icon-download-alt"></i> Download Exception / OnGoing File</a>';
 	disableOnGoingExceptionButton(machineName, day);
-}	
+}
 
 function addOnGoing(machineName, day){
 	var m = machines[machineName];
-	ongoing[machineName] = { machineName: m.machineName, 
-							 complianceStatus: m[day], 
+	ongoing[machineName] = { machineName: m.machineName,
+							 complianceStatus: m[day],
 							 validFrom: day,
 							 systems: systems,
 							 type: "ongoing"
@@ -34,11 +34,11 @@ function addOnGoing(machineName, day){
 
 	displayNotice(machineName, "on-going");
 
-	document.getElementById("exceptionsText").innerHTML = 
-			'<a href="data:text/csv;base64,' + btoa(exceptionExportGenerator()) + 
+	document.getElementById("exceptionsText").innerHTML =
+			'<a href="data:text/csv;base64,' + btoa(exceptionExportGenerator()) +
 			'" download="' + day + '_exceptions.json"><i class="icon-download-alt"></i> Download Exception / OnGoing File</a>';
 	disableOnGoingExceptionButton(machineName, day);
-}	
+}
 
 // Only potentially incompliant systems pass by here.
 function checkExceptionOrOnGoing(machine, day, systemName, exceptionsOrOnGoing){
@@ -52,7 +52,7 @@ function checkExceptionOrOnGoing(machine, day, systemName, exceptionsOrOnGoing){
 	if(!(m.systems.indexOf(systemName)))
 		return "";
 
-	// So last measurement, the system was ok, and now it is not??? 
+	// So last measurement, the system was ok, and now it is not???
 	if(m.complianceStatus.systemName === true)
 		return "";
 
@@ -65,8 +65,8 @@ function disableOnGoingExceptionButton(machineName, day){
 }
 
 function displayNotice(machineName, exceptionsOrOnGoingString){
-	document.getElementById("notificationzone").innerHTML = 
-		'<div class="notice success fade"><i class="icon-ok icon-large"></i> Succsessfully added ' + 
+	document.getElementById("notificationzone").innerHTML =
+		'<div class="notice success fade"><i class="icon-ok icon-large"></i> Succsessfully added ' +
 		machineName + ' as ' + exceptionsOrOnGoingString + ' <a href="#close" class="icon-remove"></a></div>';
 }
 
@@ -85,10 +85,10 @@ function getFilenameLi() {
 
 function formatDate(date){
 	date = date.split("");
-	return  date[0] + 
-			date[1] + 
-			date[2] + 
-			date[3] + "-" + 
+	return  date[0] +
+			date[1] +
+			date[2] +
+			date[3] + "-" +
 			date[4] +
 			date[5] + "-" +
 			date[6] +
@@ -129,7 +129,7 @@ function getComplianceLevel(machine, day){
 	}
 
 	var cl = inc/systems.length;
-	
+
 	if (cl <= 1 && cl >= 0.75)
 		t += " c000";
 	else if (cl < 0.75 && cl >= 0.5)
@@ -169,7 +169,7 @@ function parse(files) {
 		})(f);
 	}
 
-	document.getElementById('filelist').innerHTML = '<h4>Following files have been analyzed</h4><ul>' + 
+	document.getElementById('filelist').innerHTML = '<h4>Following files have been analyzed</h4><ul>' +
 		getFilenameLi() + '</ul>';
 }
 
@@ -179,7 +179,7 @@ function processData(file) {
 	// files have to look like YYYYMMDD_<system>_extension.csv
 	// One special case is the exception system
 	var meta = file.name.split(/_|\./);
-	
+
 	// Did we already collect data about this day?
 	var day = meta[0];
 	updateDates(day);
@@ -190,8 +190,8 @@ function processData(file) {
 	if (system === "exceptions"){
 		// is this a special, mighty, magical system?
 		// let's trust it without input validation, which is always a good idea.
-		// We can always (and will) add security, later. 
-		var e = JSON.parse(csv);	
+		// We can always (and will) add security, later.
+		var e = JSON.parse(csv);
 		exceptions = e.exceptions;
 		ongoing = e.ongoing;
 		renderTables(day);
@@ -203,7 +203,7 @@ function processData(file) {
 	}
 
 	// Seperate file by line breaks
-	var allTextLines = csv.split(/\r\n|\n/);	
+	var allTextLines = csv.split(/\r\n|\n/);
 
 	// Prepare to filter comments
 	var commentOrEmpty = /^#|^\s*$/;
@@ -229,7 +229,7 @@ function processData(file) {
 
 function renderTables( day ){
 
-	tableDiv = "<h4>" + formatDate(day) + 
+	tableDiv = "<h4>" + formatDate(day) +
 		'</h4>\n<table class=""><thead><tr><th>Asset Name</th><th>Action</th>';
 
 	for(var i = 0; i < systems.length; i++){
@@ -248,27 +248,27 @@ function renderTables( day ){
 
 		var cl = getComplianceLevel(machines[m], day);
 
-		var exceptionButton = /c100/.test(cl) ? "": '<button id="btnExpt' + day + 
-			m + '" class="green small" onclick="addException(\'' + m + '\', \'' + 
-					day + '\')"><i class="icon-ok"></i> Add Exception</button>'; 
-		var onGoingButton = /c100/.test(cl) ? "": '<button id="btnOnGoing' + day + 
-			m + '" class="orange small" onclick="addOnGoing(\'' + m + '\', \'' + 
-					day + '\')"><i class="icon-cogs"></i> Add as OnGoing</button>'; 
+		var exceptionButton = /c100/.test(cl) ? "": '<button id="btnExpt' + day +
+			m + '" class="green small" onclick="addException(\'' + m + '\', \'' +
+					day + '\')"><i class="icon-ok"></i> Add Exception</button>';
+		var onGoingButton = /c100/.test(cl) ? "": '<button id="btnOnGoing' + day +
+			m + '" class="orange small" onclick="addOnGoing(\'' + m + '\', \'' +
+					day + '\')"><i class="icon-cogs"></i> Add as OnGoing</button>';
 
 		tableDiv += "<tr id='tr"+ m + day + "' class='"+ cl +"'><td>" + m + "</td>";
-		tableDiv += "<td>"; 
-	
+		tableDiv += "<td>";
+
 
 		tableDiv = tableDiv	+ exceptionButton + onGoingButton + " </td>";
 		for(var s = 0; s < systems.length; s++){
-			var c =	((machines[m])[day])[systems[s]] == 
+			var c =	((machines[m])[day])[systems[s]] ==
 				true ? '<i class="icon-ok"></i>' : '<i class="icon-thumbs-down"/>';
 			tableDiv += "<td><span class='tooltip' title='"+ systems[s]+"'>" + c + "</span></td>";
 		}
 		tableDiv += "</tr>\n";
 	}
 
-	tableDiv += "</tbody></table></div>";	
+	tableDiv += "</tbody></table></div>";
 
 	var di = document.createElement("div");
 	di.setAttribute("class", "tab-content");
@@ -302,14 +302,14 @@ function updateMachine(machine, day, system){
 }
 
 function updateTabIndex(){
-	tl = ' <ul class="tabs left"> <li><a href="#intro">Intro</a></li> <li><a href="#filelist">Filelist</a></li>'; 
+	tl = ' <ul class="tabs left"> <li><a href="#intro">Intro</a></li> <li><a href="#filelist">Filelist</a></li>';
 	for(i in dates){
 		tl += '<li><a id="i'+ dates[i] +'"href="#tab'+ dates[i] +'">' + formatDate(dates[i]) + '</a></li>';
 	}
 	tl += '</ul>';
 
 	document.getElementById("tabitems").innerHTML = tl;
-	
+
 	// Following code is stolen from kickstart html document.ready
 	// tab setup
 	$('.tab-content').addClass('clearfix').not(':first').hide();
