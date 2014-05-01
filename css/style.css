@@ -21,6 +21,10 @@
 	background: rgb(155,255,115);
 }
 
+.exception {
+	background: gray;
+}
+
 .fade {
 	opacity: 1;
 	transition: opacity .25s ease-in-out;
