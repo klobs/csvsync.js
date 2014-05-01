@@ -13,9 +13,7 @@ function addException(machineName, day){
 
 	document.getElementById("exceptions").setAttribute("style","display: block;");
 
-	document.getElementById("notificationzone").innerHTML = 
-		'<div class="notice success fade"><i class="icon-ok icon-large"></i> Succsessfully added ' + 
-		machineName + ' as an exception <a href="#close" class="icon-remove"></a></div>';
+	displayNotice(machineName, "an exception");
 
 	document.getElementById("exceptionsText").innerHTML = 
 			'<a href="data:text/csv;base64,' + btoa(exceptionExportGenerator()) + 
@@ -34,9 +32,7 @@ function addOnGoing(machineName, day){
 
 	document.getElementById("exceptions").setAttribute("style","display: block;");
 
-	document.getElementById("notificationzone").innerHTML = 
-		'<div class="notice success fade"><i class="icon-ok icon-large"></i> Succsessfully added ' + 
-		machineName + ' as OnGoing <a href="#close" class="icon-remove"></a></div>';
+	displayNotice(machineName, "on-going");
 
 	document.getElementById("exceptionsText").innerHTML = 
 			'<a href="data:text/csv;base64,' + btoa(exceptionExportGenerator()) + 
@@ -66,6 +62,12 @@ function checkExceptionOrOnGoing(machine, day, systemName, exceptionsOrOnGoing){
 function disableOnGoingExceptionButton(machineName, day){
 	document.getElementById("btnExpt" + day + machineName).setAttribute("disabled", "disabled");
 	document.getElementById("btnOnGoing" + day + machineName).setAttribute("disabled", "disabled");
+}
+
+function displayNotice(machineName, exceptionsOrOnGoingString){
+	document.getElementById("notificationzone").innerHTML = 
+		'<div class="notice success fade"><i class="icon-ok icon-large"></i> Succsessfully added ' + 
+		machineName + ' as ' + exceptionsOrOnGoingString + ' <a href="#close" class="icon-remove"></a></div>';
 }
 
 function exceptionExportGenerator(){
