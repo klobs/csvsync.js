@@ -21,8 +21,8 @@
 	background: rgb(155,255,115);
 }
 
-.exception {
-	background: gray;
+.exception, .exceptioni {
+	background: grey;
 }
 
 .fade {
@@ -40,8 +40,8 @@
 	padding: 5px;
 }
 
-.ongoing {
-	background: blue;
+.ongoing, .ongoingi{
+	background: rgb(60,113,255);
 }
 
 .opacity {
