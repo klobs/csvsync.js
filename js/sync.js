@@ -257,7 +257,7 @@ function renderTables( day ){
 		for(var s = 0; s < systems.length; s++){
 			var c =	((machines[m])[day])[systems[s]] == 
 				true ? '<i class="icon-ok"></i>' : '<i class="icon-thumbs-down"/>';
-			tableDiv += "<td>" + c + "</td>";
+			tableDiv += "<td><span class='tooltip' title='"+ systems[s]+"'>" + c + "</span></td>";
 		}
 		tableDiv += "</tr>\n";
 	}
