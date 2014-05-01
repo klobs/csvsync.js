@@ -20,7 +20,7 @@ function addException(machineName, day){
 
 function addOnGoing(machineName, day){
 	var m = machines[machineName];
-	onGoing[machineName] = { machine: m[day], onGoingDate: day, systems: systems, type: "ongoing"};
+	ongoing[machineName] = { machine: m[day], onGoingDate: day, systems: systems, type: "ongoing"};
 
 	document.getElementById("exceptions").setAttribute("style","display: block;");
 
@@ -40,9 +40,8 @@ function disableOnGoingExceptionButton(machineName, day){
 }
 
 function exceptionExportGenerator(){
-	var c = JSON.stringify(exceptions);
-	c+= JSON.stringify(onGoing);
-	return c;
+	var c = { "exceptions":  exceptions, "ongoing": ongoing};
+	return JSON.stringify(c);
 }
 
 function getFilenameLi() {
@@ -296,7 +295,7 @@ function updateTabIndex(){
 
 // Setup the dnd listeners.
 var csv, dates = [], filenames = [], systems = [], machines = {};
-var onGoing = {}, exceptions = {};
+var ongoing = {}, exceptions = {};
 var dropZone = document.getElementById('dropbox');
 dropZone.addEventListener('dragover', handleDragOver, false);
 dropZone.addEventListener('drop', handleFileSelect, false);
