@@ -227,9 +227,6 @@ function processData(file) {
 
 function renderTables( day ){
 
-//	tableDiv += '<div id="tab' + day + '" class="tab-content">\n\t';
-
-	
 	tableDiv = "<h4>" + formatDate(day) + 
 		'</h4>\n<table class=""><thead><tr><th>Asset Name</th><th>Action</th>';
 
@@ -266,8 +263,6 @@ function renderTables( day ){
 	}
 
 	tableDiv += "</tbody></table></div>";	
-
-//	tableDiv += "</div>";	
 
 	var di = document.createElement("div");
 	di.setAttribute("class", "tab-content");
