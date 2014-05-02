@@ -51,6 +51,16 @@ function checkExceptionOrOnGoing(machine, day, systemName, exceptionsOrOnGoing){
 	return m.type;
 }
 
+function checkIsNew(machine, day){
+	var i = dates.indexOf(day);
+
+	if (i === 0) 
+		return " new ";
+	else if (!(dates[i-1] in machine)) 
+		return " new ";
+	else return " old ";
+}
+
 function disableOnGoingExceptionButton(machineName, day){
 	document.getElementById("btnExpt" + day + machineName).setAttribute("disabled", "disabled");
 	document.getElementById("btnOnGoing" + day + machineName).setAttribute("disabled", "disabled");
@@ -109,7 +119,7 @@ function handleDragOver(evt) {
 }
 
 function getComplianceLevel(machine, day){
-	var t = "problem";
+	var t = "";
 	var inc = 0;
 
 	for ( var i in systems){
@@ -119,6 +129,8 @@ function getComplianceLevel(machine, day){
 			inc++;
 		}
 	}
+
+	t += checkIsNew(machine, day);
 
 	var cl = inc/systems.length;
 
@@ -131,7 +143,7 @@ function getComplianceLevel(machine, day){
 	else if (cl < 0.25 && cl > 0)
 		t += " c075";
 	else if (cl === 0)
-		t = " c100";
+		t += " c100";
 	return t;
 }
 
@@ -336,7 +348,7 @@ function updateTabIndex(){
 
 // Setup the dnd listeners.
 var csv, dates = [], filenames = [], systems = [], machines = {};
-var ongoing = {}, exceptions = {};
+var ongoing = {}, exceptions = {}, statcounter = {};
 var dropZone = document.getElementById('dropbox');
 dropZone.addEventListener('dragover', handleDragOver, false);
 dropZone.addEventListener('drop', handleFileSelect, false);

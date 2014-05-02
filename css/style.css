@@ -25,6 +25,14 @@
 	background: grey;
 }
 
+.new, .newi{
+
+}
+
+.old, .oldi{
+
+}
+
 .fade {
 	opacity: 1;
 	transition: opacity .25s ease-in-out;
