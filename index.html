@@ -2,8 +2,9 @@
 <html class="no-js">
 	<head>
 		<title>Compliance-o-meter</title>
-		<script src="js/jquery.min.js"></script>
-		<script src="HTML-KickStart/js/kickstart.js"></script> <!-- KICKSTART -->
+		<script src="js/jquery.min.js" type="text/javascript"></script>
+		<script src="HTML-KickStart/js/kickstart.js" type="text/javascript"></script> <!-- KICKSTART -->
+	    <script src="js/sync.js" type="text/javascript"></script>
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<link rel="stylesheet" href="HTML-KickStart/css/kickstart.css" media="all" /> <!-- KICKSTART -->
 	</head>
@@ -47,8 +48,36 @@
 
 			<div><h6>File area</h6></div>
 
-			<div id="dropbox" class="col_12 center">
-				<span class="message" ><i class="icon-upload-alt"></i> Drag & Drop here</span>
+			<div class="col_12 center">
+                <table class="striped">
+                    <thead><tr>
+                        <th>Altiris</th>
+                    </tr></thead>
+                    <tbody><tr>
+                        <td><input id="altiris" type="file" /></td>
+                    </tr></tbody>
+                </table>
+                <table class="striped">
+                    <thead><tr>
+                        <th>EPO</th>
+                    </tr></thead>
+                    <tbody><tr>
+                        <td><input id="epo" type="file" /></td>
+                    </tr></tbody>
+                </table>
+                <table class="striped">
+                    <thead><tr>
+                        <th>AD</th>
+                    </tr></thead>
+                    <tbody><tr>
+                        <td><input id="ad" type="file" /></td>
+                    </tr></tbody>
+                </table>
+                <table>
+                    <tbody><tr>
+                        <td><button id="ad" type="button" class="medium green" onclick="process()">Procesar</button></td>
+                    </tr></tbody>
+                </table>
 			</div>
 
 			<div id="exceptions" class="col_12 center">
@@ -110,6 +139,5 @@
 
 	</div>
 
-	<script src="js/sync.js" > </script>
 </body>
 </html>
