@@ -118,6 +118,19 @@ function handleDragOver(evt) {
 	evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
 }
 
+function incStatCounter(day,systemName){
+	var d = {}
+	if( day in statcounter ){
+		d = statcounter[day];
+	}
+
+	if (systemName in d)
+		d[systemName] = (d[systemName]) + 1;
+	else d[systemName] = 1;
+
+	statcounter[day] = d;
+}
+
 function getComplianceLevel(machine, day){
 	var t = "";
 	var inc = 0;
@@ -228,8 +241,39 @@ function processData(file) {
 		var machine = getMachine(data[0]);
 
 		updateMachine(machine, day, systemName);
+		incStatCounter(day, systemName);
 	}
 	renderTables(day);
+	renderStats();
+}
+
+function renderStats( ){
+	$("#stats").html("");
+	
+	for (d in dates){
+		$("#stats").append('<h4>'+ formatDate(dates[d]) +'</h4>');
+		$("#stats").append('<canvas id="statChart' + dates[d] + '" width="700" height="400"></canvas>');
+		
+		var data = { labels : systems.slice(0), datasets : [] }; // we want a clone of systems, not a reference
+		var o  = {	animation : false };
+	
+		var ds = {  
+			fillColor : "rgba(220,220,220,0.5)", 
+			strokeColor : "rgba(220,220,220,1)", 
+			data : []
+		}; 
+
+		for(s in systems){
+			(ds["data"]).push((statcounter[(dates[d])])[systems[s]]);
+		}	
+
+		data["labels"].push("total");
+		ds["data"].push((Object.keys(machines)).length);
+		data["datasets"].push(ds);
+
+		var ctx = $("#statChart" + dates[d]).get(0).getContext("2d");
+		var myNewChart = new Chart(ctx).Bar(data, o);
+	}
 }
 
 function renderTables( day ){
@@ -314,7 +358,7 @@ function updateMachine(machine, day, system){
 }
 
 function updateTabIndex(){
-	tl = ' <ul class="tabs left"> <li><a href="#intro">Intro</a></li> <li><a href="#filelist">Filelist</a></li>';
+	tl = ' <ul class="tabs left"> <li><a href="#intro">Intro</a></li> <li><a href="#filelist">Filelist</a></li><li><a href="#stats">Stats</a></li>';
 	for(i in dates){
 		tl += '<li><a id="i'+ dates[i] +'"href="#tab'+ dates[i] +'">' + formatDate(dates[i]) + '</a></li>';
 	}
