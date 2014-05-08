@@ -51,7 +51,7 @@ function checkExceptionOrOnGoing(machine, day, systemName, exceptionsOrOnGoing){
 	return m.type;
 }
 
-function checkIsNew(machine, day){
+function checkIsNewOrOld(machine, day){
 	var i = dates.indexOf(day);
 
 	if (i === 0) 
@@ -130,7 +130,7 @@ function getComplianceLevel(machine, day){
 		}
 	}
 
-	t += checkIsNew(machine, day);
+	t += checkIsNewOrOld(machine, day);
 
 	var cl = inc/systems.length;
 
@@ -189,9 +189,9 @@ function processData(file) {
 	updateDates(day);
 
 	// What kind of system re we dealing with?
-	var system = meta[1];
+	var systemName = meta[1];
 
-	if (system === "exceptions"){
+	if (systemName === "exceptions"){
 		// is this a special, mighty, magical system?
 		// let's trust it without input validation, which is always a good idea.
 		// We can always (and will) add security, later.
@@ -199,11 +199,12 @@ function processData(file) {
 		exceptions = e.exceptions;
 		ongoing = e.ongoing;
 		renderTables(day);
+		renderStats();
 		return;
 	}
-	else if(systems.indexOf(system) === -1){
+	else if(systems.indexOf(systemName) === -1){
 		// Remember which systems exists
-		systems.push(system);
+		systems.push(systemName);
 	}
 
 	// Seperate file by line breaks
@@ -226,7 +227,7 @@ function processData(file) {
 
 		var machine = getMachine(data[0]);
 
-		updateMachine(machine, day, system);
+		updateMachine(machine, day, systemName);
 	}
 	renderTables(day);
 }
