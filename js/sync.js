@@ -61,6 +61,40 @@ function checkIsNewOrOld(machine, day){
 	else return " old ";
 }
 
+ 
+function crossAllExportGenerator(day){
+	var c = "#HOSTNAME ("+ formatDate(day) + "),";
+
+	var r = "";
+	for (s in systems){
+		if ( r !== ""){
+			r += "|";
+		}
+		r += systems[s];
+	}
+	c+= r + "\n";
+
+	for (m in machines){
+		r = ""      
+			c += m + ",";
+
+		for(s in systems){
+			if ( r !== ""){
+				r += "|";
+			}
+
+			if(!(day in machines[m]))
+				r += "NA";
+
+			if(((machines[m])[day])[systems[s]])
+				r += "true";
+			else r += "false";
+		}
+		c += r + "\n";
+	}
+	return c;
+}
+
 function disableOnGoingExceptionButton(machineName, day){
 	document.getElementById("btnExpt" + day + machineName).setAttribute("disabled", "disabled");
 	document.getElementById("btnOnGoing" + day + machineName).setAttribute("disabled", "disabled");
@@ -317,7 +351,10 @@ function renderTables( day ){
 		tableDiv += "</tr>\n";
 	}
 
-	tableDiv += "</tbody></table></div>";
+	tableDiv += '</tbody></table>';
+
+	tableDiv += '\n<p><a href="data:text/csv;base64,'+ btoa(crossAllExportGenerator(day)) +
+		'" download="' + day + '_cross_all.csv">Download this table as CSV</a></p>';
 
 	var di = document.createElement("div");
 	di.setAttribute("class", "tab-content");
