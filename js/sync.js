@@ -255,7 +255,7 @@ function renderStats( ){
 		$("#stats").append('<canvas id="statChart' + dates[d] + '" width="700" height="400"></canvas>');
 		
 		var data = { labels : systems.slice(0), datasets : [] }; // we want a clone of systems, not a reference
-		var o  = {	animation : false };
+		var o  = {	animation : false, scaleOverride : true, scaleStartValue : 0, scaleStepWidth : 1, scaleSteps : ((Object.keys(machines)).length) };
 	
 		var ds = {  
 			fillColor : "rgba(220,220,220,0.5)", 
