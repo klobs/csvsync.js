@@ -75,8 +75,8 @@ function crossAllExportGenerator(day){
 	c+= r + "\n";
 
 	for (m in machines){
-		r = ""      
-			c += m + ",";
+		r = ""; 
+		c += m + ",";
 
 		for(s in systems){
 			if ( r !== ""){
@@ -85,14 +85,24 @@ function crossAllExportGenerator(day){
 
 			if(!(day in machines[m]))
 				r += "NA";
-
-			if(((machines[m])[day])[systems[s]])
+			else if(((machines[m])[day])[systems[s]])
 				r += "true";
 			else r += "false";
 		}
 		c += r + "\n";
 	}
 	return c;
+}
+
+function countTotalMachines(day){
+	var i = 0;
+
+	for (m in machines){
+		if(day in machines[m]){
+			i++;
+		}
+	}
+	return i;
 }
 
 function disableOnGoingExceptionButton(machineName, day){
@@ -284,30 +294,35 @@ function processData(file) {
 function renderStats( ){
 	$("#stats").html("");
 	
-	for (d in dates){
-		$("#stats").append('<h4>'+ formatDate(dates[d]) +'</h4>');
-		$("#stats").append('<canvas id="statChart' + dates[d] + '" width="700" height="400"></canvas>');
-		
-		var data = { labels : systems.slice(0), datasets : [] }; // we want a clone of systems, not a reference
-		var o  = {	animation : false, scaleOverride : true, scaleStartValue : 0, scaleStepWidth : 1, scaleSteps : ((Object.keys(machines)).length) };
+	$("#stats").append('<h4>'+ formatDate(dates[0]) + '...' + formatDate(dates[dates.length-1]) + '</h4>');
+
+	var table = "<table><thead><tr><th>System</th>";
 	
-		var ds = {  
-			fillColor : "rgba(220,220,220,0.5)", 
-			strokeColor : "rgba(220,220,220,1)", 
-			data : []
-		}; 
-
-		for(s in systems){
-			(ds["data"]).push((statcounter[(dates[d])])[systems[s]]);
-		}	
-
-		data["labels"].push("total");
-		ds["data"].push((Object.keys(machines)).length);
-		data["datasets"].push(ds);
-
-		var ctx = $("#statChart" + dates[d]).get(0).getContext("2d");
-		var myNewChart = new Chart(ctx).Bar(data, o);
+	for (d in dates){
+			table += "<th>" + formatDate(dates[d]) + "</th>";
 	}
+		
+	table += "</tr></thead><tbody>";
+
+	for (s in systems){
+		table += '<tr><td>' + systems[s] + '</td>';
+		
+		for (d in dates){
+			table += '<td>' + ((statcounter[(dates[d])])[systems[s]]) + '</td>';
+		}
+		
+		table += "</tr>";
+	}
+
+	table += '<tr><td>Total</td>';
+
+	for (d in dates){
+		table += '<td>' + countTotalMachines(dates[d]) + '</td>';
+	}
+
+	table += "</tr></tbody></table>";
+
+	$("#stats").append(table);
 }
 
 function renderTables( day ){
