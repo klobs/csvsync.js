@@ -308,7 +308,9 @@ function renderStats( ){
 		table += '<tr><td>' + systems[s] + '</td>';
 		
 		for (d in dates){
-			table += '<td>' + ((statcounter[(dates[d])])[systems[s]]) + '</td>';
+			table += '<td>' + ((statcounter[(dates[d])])[systems[s]]) 
+					+ ' / ' + (100/countTotalMachines(dates[d]) 
+					* ((statcounter[(dates[d])])[systems[s]])).toFixed(2) + '%</td>';
 		}
 		
 		table += "</tr>";
@@ -317,7 +319,7 @@ function renderStats( ){
 	table += '<tr><td>Total</td>';
 
 	for (d in dates){
-		table += '<td>' + countTotalMachines(dates[d]) + '</td>';
+		table += '<td>' + countTotalMachines(dates[d]) + ' / 100% </td>';
 	}
 
 	table += "</tr></tbody></table>";
