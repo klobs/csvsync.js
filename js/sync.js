@@ -72,7 +72,13 @@ function crossAllExportGenerator(day){
 		}
 		r += systems[s];
 	}
-	c+= r + "\n";
+
+	c += r;
+
+	if (Object.keys(exceptions) !== "") 
+		c+= ",Exception";
+
+	c += "\n";
 
 	for (m in machines){
 		r = ""; 
@@ -88,7 +94,15 @@ function crossAllExportGenerator(day){
 			else if(((machines[m])[day])[systems[s]])
 				r += "true";
 			else r += "false";
+
 		}
+
+		if( exceptions[m] &&
+			(exceptions[m])["exceptionDateFrom"] <= day)
+				r+=",true";
+
+		else r+=",false";
+
 		c += r + "\n";
 	}
 	return c;
