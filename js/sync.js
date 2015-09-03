@@ -98,7 +98,7 @@ function crossAllExportGenerator(day){
 		}
 
 		if( exceptions[m] &&
-			(exceptions[m])["exceptionDateFrom"] <= day)
+			exceptions[m].validFrom <= day)
 				r+=",true";
 
 		else r+=",false";
